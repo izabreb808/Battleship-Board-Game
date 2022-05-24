@@ -30,7 +30,7 @@ namespace Battleship_Board_Game.Model
 
         public Board getBoard() { return this.board; }
 
-        public Boolean playerSunkAllShips()
+        public Boolean playerSunkAllShips() // is game over
         {
             if (sunkShipsNumber >= ShipsConsts.SHIPS_AMOUNT) return true;
             return false;
@@ -50,33 +50,37 @@ namespace Battleship_Board_Game.Model
                 if (shotDirection == 'd')
                 {
                     shot = new Point(prevSuccessShot.X, prevSuccessShot.Y + 1);
-                    if (shot.Y == 9) { 
-                        prevSuccessShot = firstSuccessShot; 
-                        shotDirection = 'u'; 
+                    if (shot.Y > 9)
+                    {
+                        prevSuccessShot = firstSuccessShot;
+                        shotDirection = 'u';
                     }
                 }
                 if (shotDirection == 'u')
                 {
                     shot = new Point(prevSuccessShot.X, prevSuccessShot.Y - 1);
-                    if (shot.Y == 0) { 
-                        prevSuccessShot = firstSuccessShot; 
-                        shotDirection = 'd'; 
+                    if (shot.Y < 0)
+                    {
+                        prevSuccessShot = firstSuccessShot;
+                        shotDirection = 'd';
                     }
                 }
                 if (shotDirection == 'l')
                 {
                     shot = new Point(prevSuccessShot.X - 1, prevSuccessShot.Y);
-                    if (shot.X == 0) { 
-                        prevSuccessShot = firstSuccessShot; 
-                        shotDirection = 'r'; 
+                    if (shot.X < 0)
+                    {
+                        prevSuccessShot = firstSuccessShot;
+                        shotDirection = 'r';
                     }
                 }
                 if (shotDirection == 'r')
                 {
                     shot = new Point(prevSuccessShot.X + 1, prevSuccessShot.Y);
-                    if (shot.X == 9) { 
-                        prevSuccessShot = firstSuccessShot; 
-                        shotDirection = 'l'; 
+                    if (shot.X > 9)
+                    {
+                        prevSuccessShot = firstSuccessShot;
+                        shotDirection = 'l';
                     }
                 }
             }
@@ -130,7 +134,7 @@ namespace Battleship_Board_Game.Model
             
         }
 
-        private char randomizeNextShotDirection() // ==========================================
+        private char randomizeNextShotDirection() 
         {
             char c = 'n';
             Boolean tryAgain = true;

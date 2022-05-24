@@ -21,29 +21,30 @@ namespace Battleship_Board_Game.Model
             while (true)
             {
                 Console.Clear();
+                Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine("Player " + playerTurn + " turn");
 
-                if (playerTurn == 1) 
-                { 
-                    p1.makeTurn(); 
-                    playerTurn = 2; 
-                } 
-                else 
-                { 
-                    p2.makeTurn(); 
-                    playerTurn = 1; 
+                if (playerTurn == 1)
+                {
+                    p1.makeTurn();
+                    playerTurn = 2;
                 }
-
+                else
+                {
+                    p2.makeTurn();
+                    playerTurn = 1;
+                }
+                Console.ForegroundColor = ConsoleColor.White;
                 Console.Write("\n\nPlayer 1 guessing board: \n----------------------\n");
                 showShotBoard(p1.getBoard());
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.Write("\n\nPlayer 2 guessing board: \n------------------\n");
                 showShotBoard(p2.getBoard());
 
-                if (p1.playerSunkAllShips()) { Console.Write("PLAYER 1 WINS"); break; }
-                if (p2.playerSunkAllShips()) { Console.Write("PLAYER 2 WINS"); break; }
+                if (p1.playerSunkAllShips()) { Console.Write("\nPLAYER 1 WINS"); break; }
+                if (p2.playerSunkAllShips()) { Console.Write("\nPLAYER 2 WINS"); break; }
 
-                Thread.Sleep(1000);  
+                Thread.Sleep(1000);
 
             }
         }
@@ -54,15 +55,15 @@ namespace Battleship_Board_Game.Model
             {
                 Console.Write("\n");
                 for (int y = 0; y < 10; y++)
-                 
+
                     Console.Write(fieldContent(new Point(x, y), board));
-               
+
             }
         }
 
         public void showShotBoard(Board board)
         {
-            
+
             Console.WriteLine("\n");
             for (int x = 0; x < 10; x++)
             {
@@ -92,9 +93,9 @@ namespace Battleship_Board_Game.Model
         }
 
 
-        private string fieldContent(Point coords, Board board) 
+        private string fieldContent(Point coords, Board board)
         {
-            foreach (Ship s in board.getShipsList()) 
+            foreach (Ship s in board.getShipsList())
                 foreach (ShipSegment seg in s.getShipInfo())  // s - list of segmants
                     if (seg.coords == coords)
                     {
@@ -103,7 +104,7 @@ namespace Battleship_Board_Game.Model
                         if (s.getLength() == 4) return " B ";
                         if (s.getLength() == 3) return " S ";
                         if (s.getLength() == 2) return " P ";
-                        //return " X ";
+                       
                     }
             return " ~ ";
         }

@@ -29,7 +29,7 @@ namespace Battleship_Board_Game.Model
         public List<Ship> getShipsList() { return this.ships; }
         public List<Point> getAvailableFields() { return this.shootAvailableFields; }
 
-        public void setShipsRandomly() // create all the ships and add them to the list 
+        public void setShipsRandomly() 
         {
 
             for (int i = 0; i < ShipsConsts.SHIPS_AMOUNT; i++)
@@ -39,7 +39,7 @@ namespace Battleship_Board_Game.Model
             }
         }
 
-        private Ship createRandomShip(int shipLength) // create a ship of given length - find a random free place on the board
+        private Ship createRandomShip(int shipLength) 
         {
             List<ShipSegment> shipSegments = new List<ShipSegment>();
             bool shipPositionNotOK = true;
@@ -103,7 +103,7 @@ namespace Battleship_Board_Game.Model
                 return true;
             }
 
-        private void deleteDuplicats() // delete fields which were added more than once
+        private void deleteDuplicats() // delete fields added more than once
         {
             this.forbiddenFields = forbiddenFields.GroupBy(p => new { p.X, p.Y }).Select(p => p.First()).ToList();
         }
