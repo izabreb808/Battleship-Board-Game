@@ -8,4 +8,19 @@ First success shot is always taken to a variable firstSuccessShot. After that, t
 square, but the ship isn't sunk yet, algorithm goes back to the firstSuccessShot field and starts firing in the opposite direction. After the whole ship has sunk, another 
 shot is randomly generated (not including forbidden fields).
 
+<p align="center">
+  <img src="[https://github.com/izabreb808/DoctorAppointmentSystem/blob/main/pliki%20do%20dokumentacji/schemat.png](https://github.com/izabreb808/Battleship-Board-Game/blob/master/game.png)"><br>
+  <em>Rysunek 1: Schemat plików użytych do projektu</em>
+</p>
+
+<p align="center">
+  <img src="[https://github.com/izabreb808/DoctorAppointmentSystem/blob/main/pliki%20do%20dokumentacji/schemat.png](https://github.com/izabreb808/Battleship-Board-Game/blob/master/game.png)"><br>
+  <em>Rysunek 1: Schemat plików użytych do projektu</em>
+</p>
+
+  <p align="center">
+  <img src="[https://github.com/izabreb808/DoctorAppointmentSystem/blob/main/pliki%20do%20dokumentacji/schemat.png](https://github.com/izabreb808/Battleship-Board-Game/blob/master/game.png)"><br>
+  <em>Rysunek 1: Schemat plików użytych do projektu</em>
+</p>
+
 
