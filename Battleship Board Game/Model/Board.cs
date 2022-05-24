@@ -15,7 +15,7 @@ namespace Battleship_Board_Game.Model
 
         private List<Ship> ships; //list of ships on board
         private List<Point> shootAvailableFields; //list of fields that can yet contain a ship [ ~YOUR GUESSING BOARD ]
-        private List<Point> forbiddenFields; //list of fields that can't be randomly selected for ship
+        private List<Point> forbiddenFields; //list of fields that can't be selected to place the ship
 
         public Board()
         {
@@ -27,9 +27,9 @@ namespace Battleship_Board_Game.Model
         }
 
         public List<Ship> getShipsList() { return this.ships; }
-        public List<Point> getAvaibleFields() { return this.shootAvailableFields; }
+        public List<Point> getAvailableFields() { return this.shootAvailableFields; }
 
-        public void setShipsRandomly()
+        public void setShipsRandomly() // create all the ships and add them to the list 
         {
 
             for (int i = 0; i < ShipsConsts.SHIPS_AMOUNT; i++)
@@ -39,27 +39,26 @@ namespace Battleship_Board_Game.Model
             }
         }
 
-        private Ship createRandomShip(int shipLength)
+        private Ship createRandomShip(int shipLength) // create a ship of given length - find a random free place on the board
         {
             List<ShipSegment> shipSegments = new List<ShipSegment>();
             bool shipPositionNotOK = true;
-            // int shipPositionTry = 0;
             int shipOrientation;
             Point segmentCoords;
 
             while (shipPositionNotOK)
             {
-                shipSegments.Clear(); //!!!
-                shipOrientation = rand.Next(0, 2); // 1 = vertical /  0 = horizontal
+                shipSegments.Clear(); 
+                shipOrientation = rand.Next(0, 2); 
 
-                // choose the segment on the left side or the top one
-                if (shipOrientation == 1) // y can not be bigger than 10-shipLength+1 to make the ship fit on the board
+               
+                if (shipOrientation == 1) 
                 {
                     segmentCoords = new Point(rand.Next(0, 10), rand.Next(0, 10 - shipLength + 1));
                 }
                 else
                 {
-                    segmentCoords = new Point(rand.Next(0, 10 - shipLength + 1), rand.Next(0, 10)); // the same with x
+                    segmentCoords = new Point(rand.Next(0, 10 - shipLength + 1), rand.Next(0, 10)); 
                 }
 
                 for (int i = 0; i < shipLength; i++)
@@ -67,7 +66,7 @@ namespace Battleship_Board_Game.Model
                     if (isFieldAvailable(segmentCoords) == false) break;
                     shipSegments.Add(new ShipSegment(segmentCoords));
                     _ = shipOrientation == 1 ? segmentCoords.Y++ : segmentCoords.X++; // _ = don't assign the result of an expression to a variable, just increment x or y
-                    if (i == shipLength - 1) shipPositionNotOK = false; // the whole ship is built - break the while loop
+                    if (i == shipLength - 1) shipPositionNotOK = false; 
                 }
             }
             addForbiddenFields(shipSegments);
@@ -77,7 +76,7 @@ namespace Battleship_Board_Game.Model
 
 
 
-            private void addForbiddenFields(List<ShipSegment> shipSegments)
+            private void addForbiddenFields(List<ShipSegment> shipSegments) // add a segment and all segments around it to the list of forbidden fields
             {
                 int x, y;
                 foreach (ShipSegment seg in shipSegments)
@@ -104,19 +103,19 @@ namespace Battleship_Board_Game.Model
                 return true;
             }
 
-        private void deleteDuplicats()
+        private void deleteDuplicats() // delete fields which were added more than once
         {
             this.forbiddenFields = forbiddenFields.GroupBy(p => new { p.X, p.Y }).Select(p => p.First()).ToList();
         }
 
-        private void fillShootAvailableList()
+        private void fillShootAvailableList() // set all the fields as available at the beginning 
         {
             for (int x = 0; x < 10; x++)
                 for (int y = 0; y < 10; y++)
                     this.shootAvailableFields.Add(new Point(x, y));
         }
-        // ============================================================================================
-        public int checkHit(Point shoot)
+     
+        public int checkHit(Point shoot) 
         {
             foreach (Ship s in this.ships)
             {
@@ -129,12 +128,14 @@ namespace Battleship_Board_Game.Model
                         if (s.isSunk())
                         {
                             removeFieldsAroundShip(s.getShipInfo());
-                            s.sunkShip(); return 2;
+                            s.sunkShip(); 
+                            return 2;
                         }
                         return 1;
                     }
                 }
             }
+            removeSpecificField(shoot);
             return 0;
         }
 
@@ -177,6 +178,18 @@ namespace Battleship_Board_Game.Model
         private void removeSpecificField(Point p)
         {
             this.shootAvailableFields.Remove(this.shootAvailableFields.Find(P => p == P));
+        }
+
+        public Boolean isSegmentOnThisCoords(Point coords)
+        {
+            foreach (Ship s in ships) 
+            { 
+                foreach (ShipSegment seg in s.getShipInfo()) 
+                { 
+                    if (seg.coords == coords) return true; 
+                } 
+            }
+            return false;
         }
 
     }
